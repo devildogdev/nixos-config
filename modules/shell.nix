@@ -16,6 +16,7 @@
     ];
     shellAliases = {
       vim = "nvim";
+      nrs = "nixos-rebuild switch --flake ~/.nixos-config";
     };
     envExtra = ''
       export LESSHISTFILE=-

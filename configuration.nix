@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
   ];
 
   nix.gc = {
@@ -43,6 +43,13 @@
   programs.git.enable = true;
   programs.river-classic.enable = true;
   programs.waybar.enable = true;
+  programs.ssh = {
+    enable = true;
+    extraConfig = ''
+      Host github.com
+          IdentityFile ~/.ssh/github
+    '';
+  };
 
   environment.pathsToLink = [ "/share/zsh" ];
   environment.systemPackages = with pkgs; [
