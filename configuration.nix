@@ -38,18 +38,18 @@
     shell = pkgs.zsh;
   };
 
-  programs.firefox.enable = true;
-  programs.zsh.enable = true;
-  programs.git.enable = true;
-  programs.river-classic.enable = true;
-  programs.waybar.enable = true;
   programs.ssh = {
-    enable = true;
     extraConfig = ''
       Host github.com
           IdentityFile ~/.ssh/github
     '';
   };
+
+  programs.firefox.enable = true;
+  programs.zsh.enable = true;
+  programs.git.enable = true;
+  programs.river-classic.enable = true;
+  programs.waybar.enable = true;
 
   environment.pathsToLink = [ "/share/zsh" ];
   environment.systemPackages = with pkgs; [
