@@ -38,13 +38,6 @@
     shell = pkgs.zsh;
   };
 
-  programs.ssh = {
-    extraConfig = ''
-      Host github.com
-          IdentityFile ~/.ssh/github
-    '';
-  };
-
   programs = {
     firefox.enable = true;
     zsh.enable = true;

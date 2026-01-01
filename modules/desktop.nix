@@ -3,7 +3,6 @@
 {
   wayland.windowManager.river = {
     enable = true;
-    systemd.enable = true;
     extraSessionVariables = {
       MOZ_ENABLE_WAYLAND = "1";
     };
@@ -109,6 +108,7 @@
       swaybg -i ~/pics/wallpaper.jpg &
     '';
   };
+
   programs = {
     waybar = {
       enable = true;
@@ -296,6 +296,7 @@
         }
       '';
     };
+
     foot = {
       enable = true;
       server.enable = true;
@@ -337,6 +338,7 @@
         mouse.hide-when-typing = true;
       };
     };
+
     fuzzel = {
       enable = true;
       settings = {
@@ -364,6 +366,7 @@
       };
     };
   };
+
   services = {
     mako = {
       enable = true;
