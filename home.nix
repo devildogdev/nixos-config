@@ -2,32 +2,49 @@
 
 {
   imports = [
-    ./modules/shell.nix
     ./modules/desktop.nix
-  ];
-  home.username = "devildogdev";
-  home.homeDirectory = "/home/devildogdev";
-  home.stateVersion = "25.11";
-
-  home.packages = with pkgs; [
-    btop
-    swaybg
-    xdg-desktop-portal-wlr
-    wl-clipboard
+    ./modules/editor.nix
+    ./modules/shell.nix
   ];
 
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "devildogdev";
-        email = "justinrtew@gmail.com";
-      };
-    };
+  home = {
+    username = "devildogdev";
+    homeDirectory = "/home/devildogdev";
+    stateVersion = "25.11";
+    packages = with pkgs; [
+      btop
+      swaybg
+      waylock
+      grim
+      slurp
+      wl-clipboard
+      xdg-desktop-portal-wlr
+    ];
   };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
+  services.ssh-agent.enable = true;
+
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "devildogdev";
+          email = "justinrtew@gmail.com";
+        };
+      };
+    };
+  
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      matchBlocks = {
+        "github.com" = {
+	  user = "git";
+	  identityFile = "~/.ssh/github";
+	  addKeysToAgent = "yes";
+	};
+      };
+    };
   };
 }

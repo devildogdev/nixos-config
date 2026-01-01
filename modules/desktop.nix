@@ -16,53 +16,55 @@
       declare-mode = "passthrough";
       map = {
         normal = {
-	  "Super+Shift Return" = "spawn footclient";
-	  "Super D" = "spawn 'fuzzel -d'";
-	  "Super Q" = "close";
-	  "Super+Shift E" = "exit";
-	  "Super J" = "focus-view next";
-	  "Super K" = "focus-view previous";
-	  "Super+Shift J" = "swap next";
-	  "Super+Shift K" = "swap previous";
-	  "Super Period" = "focus-output next";
-	  "Super Comma" = "focus-output previous";
-	  "Super+Shift Period" = "send-to-output next";
-	  "Super+Shift Comma" = "send-to-output previous";
-	  "Super Return" = "zoom";
-	  "Super H" = "send-layout-cmd rivertile 'main-ratio -0.05'";
-	  "Super L" = "send-layout-cmd rivertile 'main-ratio +0.05'";
-	  "Super+Shift H" = "send-layout-cmd rivertile 'main-count +1'";
-	  "Super+Shift L" = "send-layout-cmd rivertile 'main-count -1'";
-	  "Super+Alt H" = "move left 100";
-	  "Super+Alt J" = "move down 100";
-	  "Super+Alt K" = "move up 100";
-	  "Super+Alt L" = "move right 100";
-	  "Super+Alt+Control H" = "snap left";
-	  "Super+Alt+Control J" = "snap down";
-	  "Super+Alt+Control K" = "snap up";
-	  "Super+Alt+Control L" = "snap right";
-	  "Super+Alt+Shift H" = "resize horizontal -100";
-	  "Super+Alt+Shift J" = "resize vertical 100";
-	  "Super+Alt+Shift K" = "resize vertical -100";
-	  "Super+Alt+Shift L" = "resize horizontal 100";
-	  "Super Space" = "toggle-float";
-	  "Super F" = "toggle-fullscreen";
-	  "Super Up" = "send-layout-cmd rivertile 'main-location top'";
-	  "Super Right" = "send-layout-cmd rivertile 'main-location right'";
-	  "Super Down" = "send-layout-cmd rivertile 'main-location bottom'";
-	  "Super Left" = "send-layout-cmd rivertile 'main-location left'";
-	  "Super F11" = "enter-mode passthrough";
-	};
-	passthrough = {
-	  "Super F11" = "enter-mode normal";
-	};
+          "Super+Shift Return" = "spawn footclient";
+          "Super D" = "spawn fuzzel";
+          "Super Q" = "close";
+          "Super S" = "spawn 'grim -g $(slurp) | wl-copy'";
+          "Super+Shift E" = "exit";
+          "Super+Control L" = "spawn 'waylock -init-color 0x000000 -input-color 0x11111b -ignore-empty-password'";
+          "Super J" = "focus-view next";
+          "Super K" = "focus-view previous";
+          "Super+Shift J" = "swap next";
+          "Super+Shift K" = "swap previous";
+          "Super Period" = "focus-output next";
+          "Super Comma" = "focus-output previous";
+          "Super+Shift Period" = "send-to-output next";
+          "Super+Shift Comma" = "send-to-output previous";
+          "Super Return" = "zoom";
+          "Super H" = "send-layout-cmd rivertile 'main-ratio -0.05'";
+          "Super L" = "send-layout-cmd rivertile 'main-ratio +0.05'";
+          "Super+Shift H" = "send-layout-cmd rivertile 'main-count +1'";
+          "Super+Shift L" = "send-layout-cmd rivertile 'main-count -1'";
+          "Super+Alt H" = "move left 100";
+          "Super+Alt J" = "move down 100";
+          "Super+Alt K" = "move up 100";
+          "Super+Alt L" = "move right 100";
+          "Super+Alt+Control H" = "snap left";
+          "Super+Alt+Control J" = "snap down";
+          "Super+Alt+Control K" = "snap up";
+          "Super+Alt+Control L" = "snap right";
+          "Super+Alt+Shift H" = "resize horizontal -100";
+          "Super+Alt+Shift J" = "resize vertical 100";
+          "Super+Alt+Shift K" = "resize vertical -100";
+          "Super+Alt+Shift L" = "resize horizontal 100";
+          "Super Space" = "toggle-float";
+          "Super F" = "toggle-fullscreen";
+          "Super Up" = "send-layout-cmd rivertile 'main-location top'";
+          "Super Right" = "send-layout-cmd rivertile 'main-location right'";
+          "Super Down" = "send-layout-cmd rivertile 'main-location bottom'";
+          "Super Left" = "send-layout-cmd rivertile 'main-location left'";
+          "Super F11" = "enter-mode passthrough";
+        };
+        passthrough = {
+          "Super F11" = "enter-mode normal";
+        };
       };
       map-pointer = {
         normal = {
-	  "Super BTN_LEFT" = "move-view";
+          "Super BTN_LEFT" = "move-view";
           "Super BTN_RIGHT" = "resize-view";
           "Super BTN_MIDDLE" = "toggle-float";
-	};
+        };
       };
     };
     extraConfig = ''
@@ -107,263 +109,315 @@
       swaybg -i ~/pics/wallpaper.jpg &
     '';
   };
-  programs.waybar = {
-    enable = true;
-    settings = {
-      mainBar = {
-        height = 30;
-        spacing = 4;
-        modules-left = [
-          "river/tags"
-          "river/mode"
-        ];
-        modules-center = [
-          "clock"
-        ];
-        modules-right = [
-          "tray"
-          "network"
-          "cpu"
-          "temperature"
-          "memory"
-          "battery"
-        ];
-        "river/tags" = {
-          num-tags = 5;
+  programs = {
+    waybar = {
+      enable = true;
+      systemd.enable = true;
+      settings = {
+        mainBar = {
+          height = 30;
+          spacing = 4;
+          modules-left = [
+            "river/tags"
+          ];
+          modules-center = [
+            "clock"
+          ];
+          modules-right = [
+            "tray"
+            "network"
+            "cpu"
+            "temperature"
+            "memory"
+            "battery"
+          ];
+          "river/tags" = {
+            num-tags = 5;
+            disable-click = true;
+          };
+          tray = {
+              spacing = 10;
+          };
+          network = {
+              format-wifi = "";
+              format-ethernet = "";
+              tooltip = "false";
+              format-linked = "{ifname} (No IP) ";
+              format-disconnected = "⚠";
+              format-alt = "{ifname}: {ipaddr}/{cidr}";
+          };
+          cpu = {
+              format = "{usage}% ";
+              tooltip = "false";
+          };
+          temperature = {
+              critical-threshold = 80;
+              format = "{temperatureC}°C {icon}";
+              format-icons = [ "" "" "" ];
+          };
+          memory = {
+              format = "{}% ";
+          };
+          battery = {
+              states = {
+                  warning = 30;
+                  critical = 15;
+              };
+              format = "{capacity}% {icon}";
+              format-full = "{capacity}% {icon}";
+              format-charging = "{capacity}% ";
+              format-plugged = "{capacity}% ";
+              format-alt = "{time} {icon}";
+              format-icons = [ "" "" "" "" "" ];
+          };
+          clock =  {
+              tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+              format-alt = "{:%Y-%m-%d}";
+          };
         };
-        tray = {
-            spacing = 10;
+      };
+      style = ''
+        * {
+          font-size: 16px;
+        }
+        
+        window#waybar {
+          background-color: #000000;
+        }
+        
+        #tags {
+          background-color: transparent;
+        }
+        
+        #tags button {
+          padding: 0 5px;
+          background-color: transparent;
+          color: #cdd6f4;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+        }
+  
+        #tags button:hover {
+          background: inherit;
+          box-shadow: inherit;
+          text-shadow: inherit;
+        }
+        
+        #tags button.occupied {
+          color: #cba6f7;
+        }
+        
+        #tags button.focused {
+          color: #cba6f7;
+          box-shadow: inset 0 -3px #cba6f7;
+        }
+        
+        #tags button.urgent {
+          color: #fab387;
+        }
+        
+        #tray,
+        #network,
+        #temperature,
+        #cpu,
+        #memory,
+        #battery,
+        #clock {
+          padding: 0 10px;
+        }
+        
+        #window,
+        #tags {
+          margin: 0 4px;
+        }
+        
+        .modules-left > widget:first-child > #tags {
+          margin-left: 0;
+        }
+        
+        #clock {
+          color: #cdd6f4;
+        }
+        
+        #battery {
+          color: #a6e3a1;
+          border-bottom: 2px solid #a6e3a1;
+        }
+        
+        #battery.charging, #battery.plugged {
+          color: #a6e3a1;
+          border-bottom: 2px solid #a6e3a1;
+        }
+        
+        /* Using steps() instead of linear as a timing function to limit cpu usage */
+        #battery.critical:not(.charging) {
+          color: #f38ba8;
+          border-bottom: 2px solid #f38ba8;
+        }
+        
+        #network {
+          color: #89b4fa;
+          border-bottom: 2px solid #89b4fa;
+        }
+        
+        #network.disconnected {
+          color: #f38ba8;
+          border-bottom: 2px solid #f38ba8;
+        }
+        
+        #temperature {
+          color: #f9e2af;
+          border-bottom: 2px solid #f9e2af;
+        }
+        
+        #temperature.critical {
+          color: #f38ba8;
+          border-bottom: 2px solid #f38ba8;
+        }
+        
+        #cpu {
+          color: #f5c2e7;
+          border-bottom: 2px solid #f5c2e7;
+        }
+        
+        #memory {
+          color: #fab387;
+          border-bottom: 2px solid #fab387;
+        }
+        
+        #tray > .passive {
+          -gtk-icon-effect: dim;
+        }
+        
+        #tray > .needs-attention {
+          -gtk-icon-effect: highlight;
+          background-color: #eba0ac;
+        }
+      '';
+    };
+    foot = {
+      enable = true;
+      server.enable = true;
+      settings = {
+        main = {
+          font = "Hack Nerd Font Mono:size=13";
+          pad = "5x5 center-when-maximized-and-fullscreen";
         };
-        network = {
-            format-wifi = "";
-            format-ethernet = "";
-            tooltip = "false";
-            format-linked = "{ifname} (No IP) ";
-            format-disconnected = "⚠";
-            format-alt = "{ifname}: {ipaddr}/{cidr}";
+        colors = {
+          cursor = "11111b f5e0dc";
+          foreground = "cdd6f4";
+          background = "000000";
+          regular0 = "45475a";
+          regular1 = "f38ba8";
+          regular2 = "a6e3a1";
+          regular3 = "f9e2af";
+          regular4 = "89b4fa";
+          regular5 = "f5c2e7";
+          regular6 = "94e2d5";
+          regular7 = "bac2de";
+          bright0 = "585b70";
+          bright1 = "f38ba8";
+          bright2 = "a6e3a1";
+          bright3 = "f9e2af";
+          bright4 = "89b4fa";
+          bright5 = "f5c2e7";
+          bright6 = "94e2d5";
+          bright7 = "a6adc8";
+          "16" = "fab387";
+          "17" = "f5e0dc";
+          selection-foreground = "cdd6f4";
+          selection-background = "414356";
+          search-box-no-match = "11111b f38ba8";
+          search-box-match = "cdd6f4 313244";
+          jump-labels = "11111b fab387";
+          urls = "89b4fa";
         };
-        cpu = {
-            format = "{usage}% ";
-            tooltip = "false";
+        bell.system = "no";
+        mouse.hide-when-typing = true;
+      };
+    };
+    fuzzel = {
+      enable = true;
+      settings = {
+        main = {
+          font = "Hack Nerd Font Mono:size 13";
+          icons-enabled = "no";
         };
-        temperature = {
-            critical-threshold = 80;
-            format = "{temperatureC}°C {icon}";
-            format-icons = [ "" "" "" ];
+        colors = {
+          background = "000000ff";
+          text = "cdd6f4ff";
+          prompt = "bac2deff";
+          placeholder = "7f849cff";
+          input = "cdd6f4ff";
+          match = "74c7ecff";
+          selection = "585b70ff";
+          selection-text = "cdd6f4ff";
+          selection-match = "74c7ecff";
+          counter = "7f849cff";
+          border = "74c7ecff";
         };
-        memory = {
-            format = "{}% ";
-        };
-        battery = {
-            states = {
-                warning = 30;
-                critical = 15;
-            };
-            format = "{capacity}% {icon}";
-            format-full = "{capacity}% {icon}";
-            format-charging = "{capacity}% ";
-            format-plugged = "{capacity}% ";
-            format-alt = "{time} {icon}";
-            format-icons = [ "" "" "" "" "" ];
-        };
-        clock =  {
-            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-            format-alt = "{:%Y-%m-%d}";
+        border = {
+          width = 2;
+          radius = 0;
         };
       };
     };
-    style = ''
-      * {
-        font-family: monospace;
-        font-size: 16px;
-      }
-      
-      window#waybar {
-        background-color: #000000;
-      }
-      
-      #tags {
-        background-color: transparent;
-      }
-      
-      #tags button {
-        padding: 0 5px;
-        background-color: transparent;
-        color: #cdd6f4;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-      }
-      
-      #workspaces button.occupied {
-        color: #cdd6f4;
-      }
-      
-      #tags button.focused {
-        color: #cba6f7;
-        box-shadow: inset 0 -3px #cba6f7;
-      }
-      
-      #tags button.urgent {
-        color: #fab387;
-      }
-      
-      #tray,
-      #network,
-      #temperature,
-      #cpu,
-      #memory,
-      #battery,
-      #clock {
-        padding: 0 10px;
-      }
-      
-      #window,
-      #tags {
-        margin: 0 4px;
-      }
-      
-      .modules-left > widget:first-child > #tags {
-        margin-left: 0;
-      }
-      
-      #clock {
-        color: #cdd6f4;
-      }
-      
-      #battery {
-        color: #a6e3a1;
-        border-bottom: 2px solid #a6e3a1;
-      }
-      
-      #battery.charging, #battery.plugged {
-        color: #a6e3a1;
-        border-bottom: 2px solid #a6e3a1;
-      }
-      
-      /* Using steps() instead of linear as a timing function to limit cpu usage */
-      #battery.critical:not(.charging) {
-        color: #f38ba8;
-        border-bottom: 2px solid #f38ba8;
-      }
-      
-      #network {
-        color: #89b4fa;
-        border-bottom: 2px solid #89b4fa;
-      }
-      
-      #network.disconnected {
-        color: #f38ba8;
-        border-bottom: 2px solid #f38ba8;
-      }
-      
-      #temperature {
-        color: #f9e2af;
-        border-bottom: 2px solid #f9e2af;
-      }
-      
-      #temperature.critical {
-        color: #f38ba8;
-        border-bottom: 2px solid #f38ba8;
-      }
-      
-      #cpu {
-        color: #f5c2e7;
-        border-bottom: 2px solid #f5c2e7;
-      }
-      
-      #memory {
-        color: #fab387;
-        border-bottom: 2px solid #fab387;
-      }
-      
-      #tray > .passive {
-        -gtk-icon-effect: dim;
-      }
-      
-      #tray > .needs-attention {
-        -gtk-icon-effect: highlight;
-        background-color: #eba0ac;
-      }
-    '';
-    systemd.enable = true;
   };
-  programs.foot = {
-    enable = true;
-    server.enable = true;
-    settings = {
-      main = {
-        font = "Hack Nerd Font Mono:size=13";
-	pad = "5x5 center-when-maximized-and-fullscreen";
+  services = {
+    mako = {
+      enable = true;
+      extraConfig = ''
+        [urgency=high]
+        border-color=#fab387
+      '';
+      settings = {
+        background-color = "#000000";
+        text-color = "#cdd6f4";
+        border-color = "#74c7ec";
+        progress-color = "over #313244";
       };
-      colors = {
-        cursor = "11111b f5e0dc";
-        foreground = "cdd6f4";
-        background = "000000";
-        regular0 = "45475a";
-        regular1 = "f38ba8";
-        regular2 = "a6e3a1";
-        regular3 = "f9e2af";
-        regular4 = "89b4fa";
-        regular5 = "f5c2e7";
-        regular6 = "94e2d5";
-        regular7 = "bac2de";
-        bright0 = "585b70";
-        bright1 = "f38ba8";
-        bright2 = "a6e3a1";
-        bright3 = "f9e2af";
-        bright4 = "89b4fa";
-        bright5 = "f5c2e7";
-        bright6 = "94e2d5";
-        bright7 = "a6adc8";
-        "16" = "fab387";
-        "17" = "f5e0dc";
-        selection-foreground = "cdd6f4";
-        selection-background = "414356";
-        search-box-no-match = "11111b f38ba8";
-        search-box-match = "cdd6f4 313244";
-        jump-labels = "11111b fab387";
-        urls = "89b4fa";
-      };
-      bell.system = "no";
-      mouse.hide-when-typing = true;
     };
-  };
-  programs.fuzzel.enable = true;
-  services.mako = {
-    enable = true;
-    extraConfig = ''
-      [urgency=high]
-      border-color=#fab387
-    '';
-    settings = {
-      background-color = "#000000";
-      text-color = "#cdd6f4";
-      border-color = "#74c7ec";
-      progress-color = "over #313244";
+    kanshi = {
+      enable = true;
+      settings = [
+        {
+          profile = {
+            name = "docked";
+            outputs = [
+              {
+                criteria = "eDP-1";
+                status = "disable";
+              }
+              {
+                criteria = "HDMI-A-1";
+              }
+            ];
+          };
+        }
+        {
+          profile = {
+            name = "undocked";
+            outputs = [
+              {
+                criteria = "eDP-1";
+              }
+            ];
+          };
+        }
+      ];
     };
-  };
-  services.kanshi = {
-    enable = true;
-    profiles = {
-      docked = {
-        outputs = [
-	  {
-	    criteria = "eDP-1";
-	    status = "disable";
-	  }
-	  {
-	    criteria = "HDMI-A-1";
-	  }
-	];
+    swayidle = {
+      enable = true;
+      events = {
+        before-sleep = "${pkgs.waylock}/bin/waylock -init-color 0x000000 -input-color 0x11111b -ignore-empty-password";
       };
-      undocked = {
-        outputs = [
-	  {
-	    criteria = "eDP-1";
-	  }
-	];
-      };
+      timeouts = [
+        {
+          timeout = 300;
+          command = "${pkgs.waylock}/bin/waylock -init-color 0x000000 -input-color 0x11111b -ignore-empty-password";
+        }
+      ];
     };
   };
 }

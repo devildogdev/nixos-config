@@ -5,18 +5,15 @@
     ./hardware-configuration.nix
   ];
 
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 7d";
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = true;
   };
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "hackpad";
-
-  networking.networkmanager.enable = true;
+  networking = {
+    networkmanager.enable = true;
+    hostName = "hackpad";
+  };
 
   time.timeZone = "America/Chicago";
 
@@ -24,13 +21,16 @@
     nerd-fonts.hack
   ];
 
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
+  security.pam.services.waylock = {};
 
-  services.libinput.enable = true;
-  services.getty.autologinUser = "devildogdev";
+  services = {
+    libinput.enable = true;
+    getty.autologinUser = "devildogdev";
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
+  };
 
   users.users.devildogdev = {
     isNormalUser = true;
@@ -45,18 +45,29 @@
     '';
   };
 
-  programs.firefox.enable = true;
-  programs.zsh.enable = true;
-  programs.git.enable = true;
-  programs.river-classic.enable = true;
-  programs.waybar.enable = true;
+  programs = {
+    firefox.enable = true;
+    zsh.enable = true;
+    git.enable = true;
+    river-classic.enable = true;
+    waybar.enable = true;
+  };
 
-  environment.pathsToLink = [ "/share/zsh" ];
-  environment.systemPackages = with pkgs; [
-    vim
-  ];
+  environment = {
+    pathsToLink = [ "/share/zsh" ];
+    systemPackages = with pkgs; [
+      vim
+    ];
+  };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 7d";
+    };
+  };
 
   system.stateVersion = "25.11";
 }
