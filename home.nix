@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./modules/desktop.nix
-    ./modules/editor.nix
-    ./modules/shell.nix
+    ./modules/desktop
+    ./modules/editor
+    ./modules/terminal
   ];
 
   xdg.portal = {
