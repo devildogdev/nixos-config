@@ -32,6 +32,6 @@
       lua-language-server
       typescript-language-server
     ];
-    extraLuaConfig = builtins.readFile ./nvim/init.lua;
+    extraLuaConfig = builtins.readFile ./init.lua;
   };
 }
