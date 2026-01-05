@@ -19,6 +19,14 @@
       set-repeat = "35 200";
       default-layout = "rivertile";
       declare-mode = "passthrough";
+      input = {
+        "pointer-2-7-SynPS/2_Synaptics_TouchPad" = {
+          eventss = true;
+          accel-profile = "flat";
+          pointer-accel = 1.0;
+          tap = true;
+	};
+      };
       map = {
         normal = {
           "Super+Shift Return" = "spawn footclient";
@@ -76,17 +84,9 @@
       for i in $(seq 1 9)
       do
           tags=$((1 << ($i - 1)))
-      
-          # Super+[1-9] to focus tag [0-8]
           riverctl map normal Super $i set-focused-tags $tags
-      
-          # Super+Shift+[1-9] to tag focused view with tag [0-8]
           riverctl map normal Super+Shift $i set-view-tags $tags
-      
-          # Super+Control+[1-9] to toggle focus of tag [0-8]
           riverctl map normal Super+Control $i toggle-focused-tags $tags
-      
-          # Super+Shift+Control+[1-9] to toggle tag [0-8] of focused view
           riverctl map normal Super+Shift+Control $i toggle-view-tags $tags
       done
       
@@ -99,12 +99,10 @@
           riverctl map $mode None XF86AudioRaiseVolume  spawn 'pamixer -i 5'
           riverctl map $mode None XF86AudioLowerVolume  spawn 'pamixer -d 5'
           riverctl map $mode None XF86AudioMute         spawn 'pamixer --toggle-mute'
-      
           riverctl map $mode None XF86AudioMedia spawn 'playerctl play-pause'
           riverctl map $mode None XF86AudioPlay  spawn 'playerctl play-pause'
           riverctl map $mode None XF86AudioPrev  spawn 'playerctl previous'
           riverctl map $mode None XF86AudioNext  spawn 'playerctl next'
-      
           riverctl map $mode None XF86MonBrightnessUp   spawn 'brightnessctl set +5%'
           riverctl map $mode None XF86MonBrightnessDown spawn 'brightnessctl set 5%-'
       done
