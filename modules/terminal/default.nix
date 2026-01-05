@@ -5,6 +5,7 @@
     ./zsh.nix
     ./fzf.nix
     ./tmux.nix
+    ./btop.nix
   ];
 
   programs = {
