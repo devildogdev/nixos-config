@@ -114,5 +114,9 @@
       swaybg -i ~/pics/wallpaper.jpg &
     '';
   };
+  programs = {
+    imv.enable = true;
+    mpv.enable = true;
+  };
 }
 

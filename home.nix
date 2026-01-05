@@ -31,12 +31,14 @@
       XDG_CURRENT_DESKTOP = "river";
     };
     packages = with pkgs; [
-      btop
       swaybg
       waylock
       grim
       slurp
       wl-clipboard
+      gimp
+      ffmpeg
+      bitwarden-cli
     ];
   };
 
