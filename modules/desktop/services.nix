@@ -17,6 +17,7 @@
     };
     kanshi = {
       enable = true;
+      systemdTarget = "river-session.target";
       settings = [
         {
           profile = {
@@ -38,6 +39,7 @@
             outputs = [
               {
                 criteria = "eDP-1";
+                status = "enable";
               }
             ];
           };
@@ -47,12 +49,16 @@
     swayidle = {
       enable = true;
       events = {
-        before-sleep = "${pkgs.waylock}/bin/waylock -init-color 0x000000 -input-color 0x11111b -ignore-empty-password";
+        before-sleep = "${pkgs.waylock}/bin/waylock -fork-on-lock -init-color 0x000000 -input-color 0x11111b -ignore-empty-password";
       };
       timeouts = [
         {
           timeout = 300;
-          command = "${pkgs.waylock}/bin/waylock -init-color 0x000000 -input-color 0x11111b -ignore-empty-password";
+          command = "${pkgs.waylock}/bin/waylock -fork-on-lock -init-color 0x000000 -input-color 0x11111b -ignore-empty-password";
+        }
+        {
+          timeout = 600;
+          command = "${pkgs.systemd}/bin/systemctl suspend";
         }
       ];
     };

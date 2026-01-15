@@ -2,12 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.netrw_banner = false
 
-vim.g.loaded_perl_provider = false
-vim.g.loaded_ruby_provider = false
-vim.g.loaded_python3_provider = false
-vim.g.loaded_node_provider = false
-
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menuone,noselect,popup"
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.expandtab = false
@@ -26,9 +21,9 @@ vim.o.wrap = false
 
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set({ "n" }, "<Leader>ef", ":Explore<CR>")
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set({ "n", "v" }, "<leader>yy", [["+yy]])
-vim.keymap.set({ "n" }, "<leader>Y", [["+Y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
+vim.keymap.set({ "n", "v" }, "<leader>yy", '"+yy')
+vim.keymap.set({ "n" }, "<leader>Y", '"+Y')
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
@@ -36,86 +31,68 @@ vim.diagnostic.config {
   virtual_text = true
 }
 
-require("nvim-treesitter.configs").setup {
-  highlight = { enable = true },
+require"nvim-treesitter".install {
+  "c",
+  "bash",
+  "sql",
+  "markdown",
+  "lua",
+  "nix",
+  "python",
+  "javascript",
+  "zig"
 }
 
-local cmp = require "cmp"
-local luasnip = require "luasnip"
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "c",
+    "bash",
+    "sql",
+    "markdown",
+    "lua",
+    "nix",
+    "python",
+    "javascript",
+    "zig"
+  },
+  callback = function()
+    vim.treesitter.start()
+  end
+})
 
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  completion = { completeopt = "menu,menuone,noinsert" },
-
-  mapping = cmp.mapping.preset.insert {
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-y>"] = cmp.mapping.confirm { select = false },
-    ["<C-Space>"] = cmp.mapping.complete {},
-  },
-  sources = {
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-    { name = "path" },
-  },
-}
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-local servers = {
-  ts_ls = {
-    cmd = { "typescript-language-server", "--stdio" },
-    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-    root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
-  },
-  pyright = {
-    cmd = { "pyright-langserver", "--stdio" },
-    filetypes = { "python" },
-    root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
-  },
-  nixd = {
-    cmd = { "nixd" },
-    filetypes = { "nix" },
-    root_markers = { "flake.nix", ".git" },
-  },
-  lua_ls = {
-    cmd = { "lua-language-server" },
-    filetypes = { "lua" },
-    root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
-    settings = {
-      Lua = {
-        completion = {
-          callSnippet = "Replace",
-        },
-        runtime = {
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          globals = { "vim" },
-        },
-        workspace = {
-          library = vim.api.nvim_get_runtime_file("", true),
-          checkThirdParty = false,
-        },
-        telemetry = {
-          enable = false,
-        },
+vim.lsp.config("luals", {
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = "Replace",
+      },
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
       },
     },
-  },
-}
+  }
+})
 
-for name, config in pairs(servers) do
-  config.capabilities = capabilities
-  vim.lsp.config(name, config)
-  vim.lsp.enable(name)
-end
+vim.lsp.enable("pyright")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("nixd")
+vim.lsp.enable("luals")
+vim.lsp.enable("marksman")
+vim.lsp.enable("clangd")
+vim.lsp.enable("gopls")
+vim.lsp.enable("zls")
+vim.lsp.enable("sqls")
+vim.lsp.enable("bashls")
 
 local builtin = require "telescope.builtin"
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
@@ -125,8 +102,10 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help ta
 require("telescope").load_extension "fzf"
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function ()
-    local builtin = require("telescope.builtin")
+  callback = function (event)
+    vim.lsp.completion.enable(true, event.data.client_id, event.buf, {
+      autotrigger = true
+    })
     vim.keymap.set("n", "gd", builtin.lsp_definitions)
     vim.keymap.set("n", "gr", builtin.lsp_references)
     vim.keymap.set("n", "gI", builtin.lsp_implementations)

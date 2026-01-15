@@ -51,8 +51,8 @@
       };
     };
 
-    nnn = {
-      enable = true;
-    };
+    nnn.enable = true;
+    ripgrep.enable = true;
+    fd.enable = true;
   };
 }

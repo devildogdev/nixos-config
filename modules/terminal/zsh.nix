@@ -41,8 +41,18 @@
         	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
         fi
   
+	nix-shell() {
+	  command nix-shell "$@" --run zsh
+	}
+
         source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
-        precmd() { __git_ps1 '%B%F{4}%3~%f%b' ' %# ' ' %s'}
+        precmd() {
+	  local nix_prompt=""
+	  if [ -n "$IN_NIX_SHELL" ]; then
+	    nix_prompt="%F{2}[nix-shell]%f "
+	  fi
+	  __git_ps1 "''${nix_prompt}%B%F{4}%3~%f%b" ' %# ' ' %s'
+	}
       '';
       profileExtra = ''
         if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then

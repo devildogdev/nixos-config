@@ -5,13 +5,29 @@
     ./hardware-configuration.nix
   ];
 
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    systemd-boot.enable = true;
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+    };
+    kernelParams = [
+      "mem_sleep_default=s2idle"
+    ];
   };
 
   networking = {
-    networkmanager.enable = true;
+    wireless.iwd = {
+      enable = true;
+      settings = {
+        General = {
+	  EnableNetworkConfiguration = true;
+	};
+	Network = {
+	  NameResolvingService = "resolvconf";
+	};
+      };
+    };
+    dhcpcd.enable = false;
     hostName = "hackpad";
   };
 
@@ -22,6 +38,15 @@
   ];
 
   security.pam.services.waylock = {};
+
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=yes
+    AllowHibernation=no
+    AllowSuspendThenHibernate=no
+    AllowHybridSleep=no
+    HibernateDelaySec=0
+    SuspendState=freeze
+  '';
 
   services = {
     libinput.enable = true;
