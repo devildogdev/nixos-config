@@ -36,10 +36,18 @@
       grim
       slurp
       wl-clipboard
+      brightnessctl
+      pamixer
       gimp
       ffmpeg
       bitwarden-cli
     ];
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
   };
 
   services.ssh-agent.enable = true;
@@ -54,7 +62,7 @@
         };
       };
     };
-  
+
     ssh = {
       enable = true;
       enableDefaultConfig = false;

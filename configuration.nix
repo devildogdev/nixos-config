@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, inputs, pkgs, ... }:
 
 {
   imports = [
@@ -59,12 +59,11 @@
 
   users.users.devildogdev = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" ];
     shell = pkgs.zsh;
   };
 
   programs = {
-    firefox.enable = true;
     zsh.enable = true;
     git.enable = true;
     river-classic.enable = true;
@@ -73,8 +72,8 @@
 
   environment = {
     pathsToLink = [ "/share/zsh" ];
-    systemPackages = with pkgs; [
-      vim
+    systemPackages = [
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 

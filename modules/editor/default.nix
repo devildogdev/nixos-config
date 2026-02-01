@@ -46,6 +46,6 @@
       gopls
       bash-language-server
     ];
-    extraLuaConfig = builtins.readFile ./init.lua;
+    initLua = builtins.readFile ./init.lua;
   };
 }

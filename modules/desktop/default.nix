@@ -89,7 +89,7 @@
           riverctl map normal Super+Control $i toggle-focused-tags $tags
           riverctl map normal Super+Shift+Control $i toggle-view-tags $tags
       done
-      
+
       all_tags=$(((1 << 32) - 1))
       riverctl map normal Super 0 set-focused-tags $all_tags
       riverctl map normal Super+Shift 0 set-view-tags $all_tags
