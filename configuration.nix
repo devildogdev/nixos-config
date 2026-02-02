@@ -63,11 +63,19 @@
     shell = pkgs.zsh;
   };
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "steam"
+    "steam-original"
+    "steam-unwrapped"
+    "steam-run"
+  ];
+
   programs = {
     zsh.enable = true;
     git.enable = true;
     river-classic.enable = true;
     waybar.enable = true;
+    steam.enable = true;
   };
 
   environment = {
