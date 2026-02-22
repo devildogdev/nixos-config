@@ -115,6 +115,7 @@
   programs = {
     imv.enable = true;
     mpv.enable = true;
+    onlyoffice.enable = true;
   };
 }
 

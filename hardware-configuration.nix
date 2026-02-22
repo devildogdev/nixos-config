@@ -5,17 +5,27 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci_renesas" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" "cryptd" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.initrd = {
+    kernelModules = [ "dm-snapshot" ];
+    availableKernelModules = [
+    "nvme"
+    "xhci_pci_renesas"
+    "xhci_pci"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+    "rtsx_pci_sdmmc"
+    "cryptd"
+    ];
+    luks.devices."cryptroot".device = "/dev/disk/by-label/nixos-encrypted";
+  };
+  boot.kernelModules = [ "kvm-amd" "amdgpu" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/nixos-root";
       fsType = "ext4";
     };
-
-  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/nixos-encrypted";
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-label/nixos-boot";

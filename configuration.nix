@@ -71,15 +71,18 @@
   ];
 
   programs = {
-    zsh.enable = true;
+    dconf.enable = true;
     git.enable = true;
-    river-classic.enable = true;
-    waybar.enable = true;
     steam.enable = true;
+    zsh.enable = true;
   };
 
   environment = {
-    pathsToLink = [ "/share/zsh" ];
+    pathsToLink = [
+      "/share/zsh"
+      "/share/applications"
+      "/share/xdg-desktop-portal"
+    ];
     systemPackages = [
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];

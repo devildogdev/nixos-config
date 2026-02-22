@@ -62,16 +62,15 @@
         };
       };
     };
-
     ssh = {
       enable = true;
       enableDefaultConfig = false;
       matchBlocks = {
         "github.com" = {
-	  user = "git";
-	  identityFile = "~/.ssh/github";
-	  addKeysToAgent = "yes";
-	};
+          user = "git";
+          identityFile = "~/.ssh/github";
+          addKeysToAgent = "yes";
+        };
       };
     };
   };
