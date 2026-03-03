@@ -34,6 +34,7 @@
   time.timeZone = "America/Chicago";
 
   fonts.packages = with pkgs; [
+    noto-fonts
     nerd-fonts.hack
   ];
 
