@@ -7,6 +7,7 @@
       settings = {
         main = {
           font = "Hack Nerd Font Mono:size 13";
+          dpi-aware = "no";
           icons-enabled = "no";
         };
         colors = {
