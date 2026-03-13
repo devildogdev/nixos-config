@@ -17,7 +17,7 @@
           font = "Hack Nerd Font Mono:size=13";
           pad = "5x5 center-when-maximized-and-fullscreen";
         };
-        colors = {
+        colors-dark = {
           cursor = "11111b f5e0dc";
           foreground = "cdd6f4";
           background = "000000";

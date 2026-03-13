@@ -10,9 +10,6 @@
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = true;
     };
-    kernelParams = [
-      "mem_sleep_default=s2idle"
-    ];
   };
 
   networking = {
@@ -39,15 +36,6 @@
   ];
 
   security.pam.services.waylock = {};
-
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=yes
-    AllowHibernation=no
-    AllowSuspendThenHibernate=no
-    AllowHybridSleep=no
-    HibernateDelaySec=0
-    SuspendState=freeze
-  '';
 
   services = {
     libinput.enable = true;
