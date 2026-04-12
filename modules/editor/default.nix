@@ -47,5 +47,7 @@
       bash-language-server
     ];
     initLua = builtins.readFile ./init.lua;
+    withRuby = false;
+    withPython3 = false;
   };
 }
