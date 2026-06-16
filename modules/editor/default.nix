@@ -34,7 +34,6 @@
       tree-sitter
       ripgrep
       fd
-      gcc
       pyright
       sqls
       nixd

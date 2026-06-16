@@ -35,6 +35,7 @@
       waylock
       grim
       slurp
+      gcc
       wl-clipboard
       brightnessctl
       pamixer
