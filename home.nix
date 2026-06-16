@@ -25,7 +25,7 @@
   home = {
     username = "devildogdev";
     homeDirectory = "/home/devildogdev";
-    stateVersion = "25.11";
+    stateVersion = "26.05";
     sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "river";
