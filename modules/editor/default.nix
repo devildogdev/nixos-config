@@ -41,7 +41,6 @@
       typescript-language-server
       clang-tools
       zls
-      marksman
       gopls
       bash-language-server
     ];

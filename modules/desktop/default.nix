@@ -81,6 +81,8 @@
       };
     };
     extraConfig = ''
+      swaybg -i ~/pics/wallpaper.jpg &
+
       for i in $(seq 1 9)
       do
           tags=$((1 << ($i - 1)))
@@ -96,9 +98,9 @@
 
       for mode in normal locked
       do
-          riverctl map $mode None XF86AudioRaiseVolume  spawn 'pamixer -i 5'
-          riverctl map $mode None XF86AudioLowerVolume  spawn 'pamixer -d 5'
-          riverctl map $mode None XF86AudioMute         spawn 'pamixer --toggle-mute'
+          riverctl map $mode None XF86AudioRaiseVolume  spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+'
+          riverctl map $mode None XF86AudioLowerVolume  spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-'
+          riverctl map $mode None XF86AudioMute         spawn 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'
           riverctl map $mode None XF86AudioMedia spawn 'playerctl play-pause'
           riverctl map $mode None XF86AudioPlay  spawn 'playerctl play-pause'
           riverctl map $mode None XF86AudioPrev  spawn 'playerctl previous'
@@ -108,8 +110,6 @@
       done
 
       rivertile -view-padding 5 -outer-padding 5 &
-
-      swaybg -i ~/pics/wallpaper.jpg &
     '';
   };
   programs = {

@@ -7,17 +7,33 @@
     ./modules/terminal
   ];
 
-  xdg.portal = {
+  xdg = {
     enable = true;
-    extraPortals = with pkgs;[
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-    ];
-    config = {
-      river = {
-        default = [ "gtk" ];
-	"org.freedesktop.impl.portal.Screenshot" = "wlr";
-	"org.freedesktop.impl.portal.ScreenCast" = "wlr";
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      desktop = null;
+      documents = "${config.home.homeDirectory}/docs";
+      download = "${config.home.homeDirectory}/dl";
+      music = null;
+      pictures = "${config.home.homeDirectory}/pics";
+      projects = "${config.home.homeDirectory}/repos";
+      publicShare = null;
+      templates = null;
+      videos = null;
+    };
+    portal = {
+      enable = true;
+      extraPortals = with pkgs;[
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
+      config = {
+        river = {
+          default = [ "gtk" ];
+            "org.freedesktop.impl.portal.Screenshot" = "wlr";
+            "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+        };
       };
     };
   };

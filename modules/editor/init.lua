@@ -35,7 +35,6 @@ require"nvim-treesitter".install {
   "c",
   "bash",
   "sql",
-  "markdown",
   "lua",
   "nix",
   "python",
@@ -87,7 +86,6 @@ vim.lsp.enable("pyright")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("nixd")
 vim.lsp.enable("luals")
-vim.lsp.enable("marksman")
 vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
 vim.lsp.enable("zls")
