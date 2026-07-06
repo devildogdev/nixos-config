@@ -52,6 +52,8 @@
       grim
       slurp
       gcc
+      go
+      zig
       wl-clipboard
       brightnessctl
       pamixer

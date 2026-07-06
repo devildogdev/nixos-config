@@ -25,6 +25,7 @@
     vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
       nvim-treesitter.withAllGrammars
+      nvim-lspconfig
       telescope-nvim
       plenary-nvim
       telescope-fzf-native-nvim

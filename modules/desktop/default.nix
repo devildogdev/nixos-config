@@ -25,7 +25,7 @@
           accel-profile = "flat";
           pointer-accel = 1.0;
           tap = true;
-	};
+        };
       };
       map = {
         normal = {
@@ -77,6 +77,11 @@
           "Super BTN_LEFT" = "move-view";
           "Super BTN_RIGHT" = "resize-view";
           "Super BTN_MIDDLE" = "toggle-float";
+        };
+      };
+      rule-add = {
+        "-app-id" = {
+          "'steam_app_*'" = "fullscreen";
         };
       };
     };

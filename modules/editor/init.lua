@@ -52,7 +52,8 @@ vim.api.nvim_create_autocmd("FileType", {
     "nix",
     "python",
     "javascript",
-    "zig"
+    "zig",
+    "go",
   },
   callback = function()
     vim.treesitter.start()
