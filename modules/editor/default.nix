@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   editorconfig = {
@@ -33,8 +33,6 @@
     ];
     extraPackages = with pkgs; [
       tree-sitter
-      ripgrep
-      fd
       pyright
       sqls
       nixd

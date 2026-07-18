@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, ... }:
+{ lib, inputs, pkgs, ... }:
 
 {
   imports = [
@@ -17,11 +17,11 @@
       enable = true;
       settings = {
         General = {
-	  EnableNetworkConfiguration = true;
-	};
-	Network = {
-	  NameResolvingService = "resolvconf";
-	};
+          EnableNetworkConfiguration = true;
+        };
+        Network = {
+          NameResolvingService = "resolvconf";
+        };
       };
     };
     dhcpcd.enable = false;
@@ -35,7 +35,32 @@
     nerd-fonts.hack
   ];
 
-  security.pam.services.waylock = {};
+  security = {
+    pam.services.waylock = {};
+    polkit = {
+      enable = true;
+      extraConfig = ''
+        polkit.addRule(function(action, subject) {
+          // Actions we care about
+          const actions = [
+            "org.freedesktop.login1.suspend",
+            "org.freedesktop.login1.suspend-multiple-sessions",
+            "org.freedesktop.login1.reboot",
+            "org.freedesktop.login1.reboot-multiple-sessions",
+            "org.freedesktop.login1.power-off",
+            "org.freedesktop.login1.power-off-multiple-sessions"
+          ];
+
+          if (actions.indexOf(action.id) !== -1) {
+            // Only allow for local, active sessions (not remote/SSH)
+            if (subject.isInGroup("wheel") && subject.isActive) {
+              return polkit.Result.YES;
+            }
+          }
+        });
+      '';
+    };
+  };
 
   services = {
     libinput.enable = true;

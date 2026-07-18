@@ -118,6 +118,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.opt_local.wrap = false
+  end,
+})
+
 require("catppuccin").setup {
   flavour = "mocha",
   integrations = {

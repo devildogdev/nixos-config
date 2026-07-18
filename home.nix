@@ -43,6 +43,7 @@
     homeDirectory = "/home/devildogdev";
     stateVersion = "26.05";
     sessionVariables = {
+      LESSHISTFILE = "-";
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "river";
     };
@@ -56,7 +57,6 @@
       zig
       wl-clipboard
       brightnessctl
-      pamixer
       gimp
       ffmpeg
       bitwarden-cli
