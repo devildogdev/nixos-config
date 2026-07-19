@@ -31,7 +31,6 @@
         normal = {
           "Super+Shift Return" = "spawn footclient";
           "Super D" = "spawn fuzzel";
-          "Super B" = "exec 'pkill -SIGUSR1 waybar'";
           "Super Q" = "close";
           "Super S" = "spawn 'grim -g \"$(slurp)\" | wl-copy'";
           "Super+Shift E" = "exit";
@@ -121,6 +120,7 @@
   programs = {
     imv.enable = true;
     mpv.enable = true;
+    obs-studio.enable = true;
     onlyoffice.enable = true;
   };
 }
