@@ -60,6 +60,7 @@
       gimp
       ffmpeg
       bitwarden-cli
+      cura-appimage
     ];
   };
 
