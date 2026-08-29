@@ -61,6 +61,10 @@
       ffmpeg
       bitwarden-cli
       cura-appimage
+      zip
+      unzip
+      ardour
+      giada
     ];
   };
 
